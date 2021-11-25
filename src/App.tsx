@@ -1,32 +1,27 @@
-import ListPokemon from "./components/ListPokemon";
-import Pagination from "./components/Pagination";
-import usePaginationFromUrl from "./models/AxiosPokemon";
+// Routing
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-export interface Pokemon {
-  pokemons: {
-    name:string
-  }[]
-}
+// Styles
+import HomePage from "./components/HomePage";
 
-function App() {
+// Components
+import { GlobalStyle } from "./GlobalStyles";
+import Header from "./components/Header";
+import Pokemon from "./components/Pokemon";
 
-  const pokemonCall = usePaginationFromUrl("https://pokeapi.co/api/v2/pokemon")
+const App = () => (
+  <>
+    <Router>
+      <Header />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/:id" element={<Pokemon />} />
+      </Routes>
 
-  // if(pokemonCall.loading) return(
-  //   <div>Loading</div>
-  // )
-
-  return (
-
-    <div className="App">
-        <ListPokemon pokemons={pokemonCall.data}/>
-    
-        <Pagination 
-          previous={pokemonCall.handlePreviousRequest} 
-          next={pokemonCall.handleNextRequest}
-        />
-    </div>
-  );
-}
+      <GlobalStyle />
+    </Router>
+  </>
+);
 
 export default App;
+
